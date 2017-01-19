@@ -47,6 +47,16 @@ def subgraph_community(G,partition,community):
     return subG
 
 ##Role functions
+
+''' Return role score for node n in graph G'''
+def diverse_actor(G, n):
+    subgraph = G.subgraph(G.neighbors(n))
+    num_components = 0
+    for component in nx.connected_components(subgraph):
+        if len(component) >= 3:
+            num_components+=1
+    return num_components
+
 ''' Return list of tuples with the top N opinion leaders and their score'''
 def opinion_leaders (G,topN):
     scores = nx.pagerank(G)
