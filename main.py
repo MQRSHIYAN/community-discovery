@@ -42,7 +42,7 @@ if display_plots:
 
 if load_partition:
     #Load partition from file
-    partition = load_obj('partition_dataset_' + str(dataset))
+    partition = fx.load_obj('partition_dataset_' + str(dataset))
     size = float(len(set(partition.values())))
 else:
     #Compute the best partition
@@ -51,13 +51,13 @@ else:
     print('Number of communities: {0}'.format(int(size)))
 
     #Save partition in file
-    save_obj(partition, 'partition_dataset_' + str(dataset))
+    fx.save_obj(partition, 'partition_dataset_' + str(dataset))
 
 #Clustering evaluation
 print('Modularity: {0:.4f}'.format(community.modularity(partition,G)))
 
 if display_plots:
-    display_partition(G,partition,2)
+    fx.display_partition(G,partition,2)
 
 #Calculate induced graph
 #ind = community.induced_graph(partition, G)
@@ -71,6 +71,4 @@ if display_plots:
 #   plt.show()
 
 #Get Opinion Leaders(OP)
-print(opinion_leaders(G,20))
-
-
+print(fx.opinion_leaders(G,20))

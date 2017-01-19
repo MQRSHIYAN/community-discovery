@@ -7,7 +7,7 @@ import matplotlib.cm as cm
 
 #Functions for loading/saving objects
 def save_obj(obj, name ):
-    with open('obj/'+ name + '.pkl', 'wb') as f:
+    with open('obj/'+ name + '.pkl', 'wb+') as f:
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
 def load_obj(name):
@@ -59,7 +59,7 @@ def opinion_leaders (G,topN):
 
 #Display functions
 def display_partition (G,partition,figureNumber=1,edgeWidth=1,nodeSize=10):
-    
+
     size = float(len(set(partition.values())))
 
     #Define colors of the clusters
