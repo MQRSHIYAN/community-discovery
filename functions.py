@@ -67,6 +67,11 @@ def opinion_leaders (G,topN):
         topRanking.append([ranking[i],scores[str(ranking[i])]])
     return topRanking
 
+def community_core(G, n, triangles = None):
+    if triangles is None:
+        triangles = sum(nx.triangles(G).values())/3
+    return nx.triangles(G, n)/triangles
+
 #Display functions
 def display_partition (G,partition,figureNumber=1,edgeWidth=1,nodeSize=10):
 
