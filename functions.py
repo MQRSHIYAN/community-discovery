@@ -46,6 +46,16 @@ def subgraph_community(G,partition,community):
     subG = G.subgraph(nodes)
     return subG
 
+def read_communities():
+    with open("communities.txt", encoding="latin-1") as file:
+        for line in file:
+            community = set()
+            for word in line.split():
+                if word.isnumeric():
+                    community.add(word)
+            yield community
+
+
 ##Role functions
 
 ''' Return role score for node n in graph G'''
