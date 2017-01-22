@@ -4,6 +4,8 @@ import pickle
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib.cm as cm
+import numpy as np
+import pandas as pd
 
 #Functions for loading/saving objects
 def save_obj(obj, name ):
@@ -54,6 +56,30 @@ def read_communities():
                 if word.isnumeric():
                     community.add(word)
             yield community
+
+def read_ground_truth():
+    df = pd.read_csv("author_label.txt",encoding="latin-1") 
+    return df
+
+''' Calculate purity from a group of communities and a ground_truth'''
+def purity(clusters,ground_truth,communityAPI=False):
+    
+    if communityAPI:
+        partition = []
+        for communities in set(clusters.values()):
+            partition.append([])
+        for k,v in clusters.items():
+            partition[v].append(k)
+        clusters =  partition
+    
+    confusion_matrix = np.zeros((len(clusters),6))
+    for idx,cluster in enumerate(clusters):
+        for node in cluster:
+            #Find real cluster in ground truth
+            node_gt = ground_truth.ix[int(node)]
+            for i in range(0,6):
+                confusion_matrix [idx,i] += node_gt[' label' + str(i)]
+    return sum(np.amax(confusion_matrix,axis=1))/sum(sum(confusion_matrix))
 
 
 ##Role functions
