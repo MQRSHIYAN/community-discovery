@@ -49,7 +49,7 @@ def subgraph_community(G,partition,community):
     return subG
 
 def read_communities():
-    with open("communities.txt", encoding="latin-1") as file:
+    with open("communities_new.txt", encoding="latin-1") as file:
         for line in file:
             community = set()
             for word in line.split():
