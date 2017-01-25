@@ -57,6 +57,12 @@ def read_communities():
                     community.add(word)
             yield community
 
+def same_community(communities, u, v):
+    for community in communities:
+        if u in community and v in community:
+            return True
+    return False
+
 def read_ground_truth():
     df = pd.read_csv("author_label.txt",encoding="latin-1") 
     return df

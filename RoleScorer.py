@@ -11,6 +11,8 @@ class RoleScorer:
         self.triangles = None
         self.node_communities = None
         self.Roles = Enum("Role", "structural_hole diverse_actor community_bridge opinion_leader community_core")
+        self.p = None
+        self.q = None
 
     def structural_hole(self, n):
         if self.node_communities is None:
@@ -34,16 +36,34 @@ class RoleScorer:
     def community_bridge(self, n):
         N = set(self.G.neighbors(n))
         communities = list(fx.read_communities())
+        if self.p is None:
+            complete = 0
+            for pair in nx.edges_iter(self.G):
+                if fx.same_community(communities, pair[0], pair[1]):
+                    #Pair is complete
+                    complete += 1
+            #Probability two linked nodes belong to same community
+            self.p = complete / nx.number_of_edges(self.G)
+            print("p =", self.p)
+
+        if self.q is None:
+            pure = 0
+            nonlinked = 0
+            for pair in nx.non_edges(self.G):
+                nonlinked += 1
+                if not fx.same_community(communities, pair[0], pair[1]):
+                    #Pair is pure
+                    pure += 1
+            #Probability two non-linked nodes do not belong to same comunity
+            self.q = pure/nonlinked
+            print("q =", self.q)
+
         sum = 0
-        #Probability two linked nodes belong to same community
-        p =
-        #Probability two non-linked nodes do not belong to same comunity
-        q=
         for vj in N:
             #Number of common neighbors
-            n1 = len(N.intersection(set(G.neighbors(vj))))
+            n1 = len(N.intersection(set(self.G.neighbors(vj))))
             n2 = len(N)-n1
-            sum += 1/(1+n1*p +n2*(1-q))
+            sum += 1/(1+n1*self.p +n2*(1-self.q))
         return sum
 
     def opinion_leader(self, n):
