@@ -36,39 +36,9 @@ class RoleScorer:
         communities = list(fx.read_communities())
         sum = 0
         #Probability two linked nodes belong to same community
-        a=0
-        b=0
-        for node in set(self.G.nodes()):
-            #Neighbors of every node in the dataset (Linked nodes)
-            nbs = self.G.neighbors(node)
-            for nb in nbs:
-                a=a+1
-                #All the communities
-                for cluster in communities:
-                    if node in cluster and nb in cluster:
-                        #Two linked nodes belong to same community
-                        b=b+1
-                        break
-                        
-        p =b/a
-        print(p)
+        p =
         #Probability two non-linked nodes do not belong to same comunity
-        a=0
-        b=0
-        all_nodes = set(self.G.nodes())
-        for node in all_nodes:
-            #Not neighbors of every node in the dataset (Non-Linked nodes)
-            nbs = all_nodes - set(self.G.neighbors(node))
-            for nb in nbs:
-                a=a+1
-                #All the communities
-                for cluster in communities:
-                    if node not in cluster and nb not in cluster:
-                        #Two non-linked nodes do not belong to same community
-                        b = b+1
-                        break             
-        q=b/a
-        print(q)
+        q=
         for vj in N:
             #Number of common neighbors
             n1 = len(N.intersection(set(G.neighbors(vj))))

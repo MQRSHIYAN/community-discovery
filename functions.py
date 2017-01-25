@@ -71,7 +71,6 @@ def purity(clusters,ground_truth,communityAPI=False):
         for k,v in clusters.items():
             partition[v].append(k)
         clusters =  partition
-    
     confusion_matrix = np.zeros((len(clusters),6))
     for idx,cluster in enumerate(clusters):
         for node in cluster:
