@@ -9,7 +9,7 @@ import pandas as pd
 
 #Functions for loading/saving objects
 def save_obj(obj, name ):
-    with open('obj/'+ name + '.pkl', 'wb+') as f:
+    with open('./obj/'+ name + '.pkl', 'wb+') as f:
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
 def load_obj(name):
@@ -108,7 +108,7 @@ def opinion_leaders (G,topN):
         topRanking.append([ranking[i],scores[str(ranking[i])]])
     return topRanking
 
-def community_core(G, n, triangles = None):
+def community_core(G, n = None, triangles = None):
     if triangles is None:
         triangles = sum(nx.triangles(G).values())/3
     return nx.triangles(G, n)/triangles
